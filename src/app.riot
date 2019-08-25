@@ -1,0 +1,23 @@
+<app>
+  <h1>Riot and Webpack</h1>
+  <p>{ state.count }</p>
+  <button onclick={ increment }>Increment</button>
+  <button onclick={ decrement }>Decrement</button>
+  <script>
+  export default {
+    state: {
+      count: 0,
+    },
+    increment() {
+      this.update({
+        count: this.state.count + 1,
+      });
+    },
+    decrement() {
+      this.update({
+        count: this.state.count - 1,
+      });
+    },
+  }
+  </script>
+</app>
