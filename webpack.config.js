@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// register template preprocessor to use `pug`
+require('./riot.config.js');
+
 module.exports = {
   entry: path.resolve(__dirname, 'src/main.js'),
   output: {
@@ -9,10 +12,21 @@ module.exports = {
     filename: 'main.bundle.js',
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'public/index.html' }),
+    new HtmlWebpackPlugin({ template: 'public/index.pug' }),
   ],
   module: {
     rules: [
+      {
+        test: /\.pug/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'pug-loader',
+          options: {
+            pretty: true,
+            exports: false,
+          },
+        }],
+      },
       {
         test: /\.riot$/,
         exclude: /node_modules/,
@@ -20,6 +34,7 @@ module.exports = {
           loader: '@riotjs/webpack-loader',
           options: {
             hot: true,
+            template: 'pug',
           },
         }],
       },
